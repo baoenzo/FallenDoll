@@ -1,0 +1,10 @@
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\bin\Debug\FallenDoll.exe.config
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\bin\Debug\FallenDoll.exe
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\bin\Debug\FallenDoll.pdb
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.csprojAssemblyReference.cache
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.Form1.resources
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.Properties.Resources.resources
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.csproj.GenerateResource.cache
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.csproj.CoreCompileInputs.cache
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.exe
+E:\Programming\C#\Tool\FallenDoll\FallenDoll\obj\Debug\FallenDoll.pdb
