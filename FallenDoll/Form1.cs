@@ -29,33 +29,43 @@ namespace FallenDoll
                 BinaryWriter wt = new BinaryWriter(File.Create(pathUexp + "_new"));// m sẽ tạo file mới uexp_new
                 List<string> lstLines = File.ReadAllLines(Path.GetDirectoryName(ofd.FileName) + @"\dump.txt").ToList();
                 rd.BaseStream.Seek(0x0, SeekOrigin.Begin);
-                byte[] start = rd.ReadBytes(75);
+                byte[] start = rd.ReadBytes(53); 
                 wt.Write(start);
                 foreach (string item in lstLines)
                 {
-
-                    wt.Write(rd.ReadInt64());
+                    long unk2 = rd.ReadInt64();
+                    wt.Write(unk2);
                     long c = rd.ReadInt64();
-                    string textTemp = item.Replace("[0]", "\0");
-                    if (c!= 22)
+                    string textTemp = "";
+                    if (item != "null")
+                    {
+                        textTemp = item.Replace("[0]", "\0");
+                    }
+                    if (c != 22) // Text rỗng
                     {
                         wt.Write(rd.ReadInt64());
+                        wt.Write(c);
                         wt.Write(rd.ReadInt64());
-                        wt.Write(rd.ReadInt64());
+                        long d = rd.ReadInt64();
+                        wt.Write(d);
+                        wt.Write(rd.ReadBytes((int)d + 1));
                     }
                     else
                     {
-                        if (item != "null" && IsChinese(textTemp))
-                        {
-                            byte[] txt = Encoding.Unicode.GetBytes(textTemp);
-                            wt.Write(txt.Length / -2);
-                            wt.Write(txt);
-                        }
+                        long dem = rd.ReadInt64();
+                        byte[] txt = Encoding.Unicode.GetBytes(textTemp);
+                        wt.Write(c);
+                        wt.Write(WriteInt64BE((long)(txt.Length + 4)));
+                        wt.Write(false);
+                        wt.Write(txt.Length / -2);
+                        wt.Write(txt);
+                        long next = rd.BaseStream.Position + dem + 1;
+                        rd.BaseStream.Seek(next, SeekOrigin.Begin);
                     }
-                    break;
-
                 }
-
+                wt.Write(WriteInt64BE(17));
+                byte[] b =  { 0xC1, 0x83, 0x2A, 0x9E };
+                wt.Write(b);
                 wt.Close();
                 rd.Close();
             }
@@ -117,15 +127,17 @@ namespace FallenDoll
                 {
                     File.WriteAllLines(Path.GetDirectoryName(ofd.FileName) + @"/dump.txt", temps);
                     MessageBox.Show("Done!!", "Done!");
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
         }
-        public bool IsChinese(string text)
+        public byte[] WriteInt64BE(long a)
         {
-            return text.Any(c => (uint)c >= 0x4E00 && (uint)c <= 0x2FA1F);
+            byte[] buffer = BitConverter.GetBytes(a);
+            return buffer;
         }
     }
 }
